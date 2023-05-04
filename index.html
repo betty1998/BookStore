@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Store</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="index.js"></script>
+    
+</head>
+<body>
+    <div class="container d-flex flex-column justify-content-start">
+        <div class="container"><h1>Books</h1></div>       
+        <!----------------------------- Table and filter  ----------------------------->
+        <div class="container d-flex justify-content-start" id="first_container">
+            <!----------------------------- Table  ----------------------------->
+            <table class="table table-bordered border-dark table-striped me-4" id = "book_table">
+                <thead>
+                <tr>
+                    <th scope="col"><a href="" class="sort-by">ID</a><i class = "fa fa-sort"></i></th>
+                    <th scope="col"><a href="" class="sort-by">Name</a><i class = "fa fa-sort"></i></th>
+                    <th scope="col"><a href="" class="sort-by">Price</a><i class = "fa fa-sort"></i></th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Operation</th>
+                </tr>
+                </thead>
+                <tbody id="table_body">
+                <tr>
+                    <th scope="row">1</th>
+                    <td>JavaScript</td>
+                    <td>100</td>
+                    <td>Bob</td>
+                    <td><a href="" class="me-2 edit_bt">Edit</a><a class='delete_bt' href="">Delete</a></td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Java</td>
+                    <td>200</td>
+                    <td>Alex</td>
+                    <td><a href="" class="me-2 edit_bt">Edit</a><a class='delete_bt' href="">Delete</a></td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>J2EE</td>
+                    <td>150</td>
+                    <td>Jim</td>
+                    <td><a href="" class="me-2 edit_bt">Edit</a><a class='delete_bt' href="">Delete</a></td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>AngularJS</td>
+                    <td>50</td>
+                    <td>Kate</td>
+                    <td><a href="" class="me-2 edit_bt">Edit</a><a class='delete_bt' href="">Delete</a></td>
+                </tr>
+                </tbody>
+                
+            </table>
+            <!----------------------------- Filter  ----------------------------->
+            <div class="container ms-4" id = "filter_container">
+                <div class="row mb-3 ms-0 ps-0">
+                    <div class="fs-4 ms-0 ps-0 me-4" style="width: 120px">Filter</div>
+                    <select style="width: 120px" id="filter_select">
+                        <option value="Name">Name</option>
+                        <option value="Author">Author</option>
+                        <option value="Min Price">Min Price</option>
+                        <option value="Max Price">Max Price</option>
+                    </select>
+                </div>
+                <div class="row ms-0 ps-0">
+                    <input type="text" class="me-4" style="width: 150px" id="filter_input" placeholder="Enter Name">
+                    <button type="submit" style="width: 80px" id="filter_btn">Filter</button>
+                </div>
+            </div>
+        </div>  
+        <!----------------------------- Operations  -----------------------------> 
+        <div class="container d-flex">
+            <!----------------------------- Add Book  -----------------------------> 
+            <div class="border border-dark border-2 p-4 me-2" id="add_book">
+                <h3>Add Book</h3>
+                <form action="" id="add_form">
+                    <div class="item">
+                        <label for="add_id">ID</label>
+                        <input type="text" id="add_id" value=6 required>
+                    </div>
+                    <div class="item">
+                        <label for="add_name">Name</label>
+                        <input type="text" id="add_name" value="Python" required>
+                    </div>
+                    <div class="item">
+                        <label for="add_price">Price</label>
+                        <input type="text" id="add_price" value=25 required>
+                    </div>
+                    <div class="item">
+                        <label for="add_author">Author</label>
+                        <input type="text" id="add_author" value="Bei" required>
+                    </div>
+                    <div class="mt-4">
+                        <button type="submit" id="add_submit">Submit</button>
+                    </div>
+                </form>
+                
+            </div>
+            <!----------------------------- Edit Book  -----------------------------> 
+            <div class="border border-dark border-2 p-4 ms-2" id="edit_book">
+                <h3>Edit Book</h3>
+                <form action="" id="edit_form">
+                    <div class="item">
+                        <label for="id">ID</label>
+                        <span id="edit_id">1</span>
+                    </div>
+                    <div class="item">
+                        <label for="edit_name">Name</label>
+                        <input type="text" id="edit_name" placeholder="Javascript" required>
+                    </div>
+                    <div class="item">
+                        <label for="edit_price">Price</label>
+                        <input type="text" id="edit_price" placeholder="100" required>
+                    </div>
+                    <div class="item">
+                        <label for="edit_author">Author</label>
+                        <input type="text" id="edit_author" placeholder="Bob" required>
+                    </div>
+                    <div class="mt-4">
+                        <button type="submit" id="edit_submit">Submit</button>
+                    </div>
+                </form>
+                
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

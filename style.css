@@ -1,0 +1,54 @@
+*{
+    box-sizing: border-box;
+}
+label{
+    width: 60px;
+}
+
+.item, #add_submit, #edit_submit{
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+#add_book, #edit_book{
+    min-width: 350px;
+    min-height: 300px;
+}
+
+thead{
+    background-color: rgb(210, 210, 210);
+}
+
+tr, td, th{
+    border-right: solid 2px black !important; 
+    border-left: solid 2px balck !important;
+    border-bottom: 0 !important;
+    border-top: 0 !important;
+  }
+
+.table-bordered {
+    border: 2px solid black;
+    
+}
+
+button{
+    box-shadow: 3px 3px 3px black !important;
+}
+
+th a{ 
+	padding-right: 18px;
+}
+
+th a:link,
+th a:visited,
+th a:hover,
+th a:active {
+	color: black;
+	text-decoration: none;
+}
+
+table{
+    table-layout: auto;
+    width: 100%;
+    white-space: nowrap;
+}
