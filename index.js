@@ -1,7 +1,31 @@
+var xhr = new XMLHttpRequest(),
+	api = 'http://localhost:8080';
+xhr.open('GET', api+'/books');
+xhr.responseType = 'json';
+xhr.onload = function onload() {
+    if (xhr.status === 200){
+        console.log("Load data from server:",xhr.response);
+        var books = xhr.response;
+        var tbody = document.getElementById('table_body');
+        Array.isArray(books) &&
+        books.forEach(function(b){
+            var tr = document.createElement('tr');
+            tr.innerHTML = `
+            <th scope='row'>${b.id}</th>
+            <td>${b.name}</td>
+            <td>${b.price}</td>
+            <td>${b.author}</td>
+            <td>
+                <a href='' class='me-2 edit_bt'>Edit</a>
+                <a href='' class="delete_bt">Delete</a>
+            </td>`;
+            tbody.appendChild(tr);
+        });
+    }
+};
+xhr.send();
+
 $(document).ready(function ready() {
-    
-
-
     // handle add book submit using javascript
     /*
     const form = document.getElementById("add_form");
@@ -58,15 +82,27 @@ $(document).ready(function ready() {
                 alert("The book with id "+id+" already exists!");
                 throw new Error("The book with id "+id+" already exists!");
             }});
-        // add new row to table using $()
-        $("#table_body").append(
-            `<tr>
-                <th scope='row'>${id}</th>
-                <td>${name}</td>
-                <td>${price}</td>
-                <td>${author}</td>
-                <td><a href='' class='me-2 edit_bt'>Edit</a><a href='' class="delete_bt">Delete</a></td>
-            </tr>`);
+        
+        var book = {id: id, name: name, price: price, author: author};
+        $.ajax({
+            url: api + '/books',
+            method: 'POST',
+            data: JSON.stringify(book),
+            contentType: 'application/json'
+        })
+        .then((res)=>{
+            console.log("Response of POST request:", res);
+            // add new book to table 
+            $("#table_body").append(
+                `<tr>
+                    <th scope='row'>${id}</th>
+                    <td>${name}</td>
+                    <td>${price}</td>
+                    <td>${author}</td>
+                    <td><a href='' class='me-2 edit_bt'>Edit</a><a href='' class="delete_bt">Delete</a></td>
+                </tr>`);})
+
+        .catch((err)=>console.log("Response of POST request:",err.message));
           
     });
     // */
@@ -81,22 +117,8 @@ $(document).ready(function ready() {
         var price = $("#edit_price").val();
         var author = $("#edit_author").val();
         console.log(id,name,price,author);
-
-        // find the corresponding row in table
-        // Solution 1
-        // /* 
-        $('#book_table tbody tr').each(function() {
-            const $row = $(this);
-            const rowId = $row.find('th').eq(0).text();
-            if (rowId == id) {
-                $row.find('td').eq(0).text(name);
-                $row.find('td').eq(1).text(price);
-                $row.find('td').eq(2).text(author);
-                console.log('Row updated:', $row);
-                return false; // Stop looping once you find the target row
-            }
-          });
-        // */
+        var book = {id: id, name: name, price: price, author: author};
+        
         /* 
         // Solution 2
         var $rows = $("#book_table").find("tbody tr");
@@ -109,13 +131,50 @@ $(document).ready(function ready() {
             }
         }
         */
+        $.ajax({
+            url: api + '/books/:' + id,
+            method: 'PUT',
+            data: JSON.stringify(book),
+            contentType: 'application/json'
+        })
+        .then((res)=>{
+            console.log("Response of PUT request:", res);
+            // find the corresponding row and edit book in table
+            // Solution 1
+            // /* 
+            $('#book_table tbody tr').each(function() {
+                const $row = $(this);
+                const rowId = $row.find('th').eq(0).text();
+                if (rowId == id) {
+                    $row.find('td').eq(0).text(name);
+                    $row.find('td').eq(1).text(price);
+                    $row.find('td').eq(2).text(author);
+                    console.log('Row updated:', $row);
+                    return false; // Stop looping once you find the target row
+                }
+            });
+            // */
+            /* 
+            // Solution 2
+            var $rows = $("#book_table").find("tbody tr");
+            for (let i = 0; i < $rows.length; i++) {
+                const $row = $rows[i];
+                const $id = $($row).find('th').text();
+                if ($id == id) {
+                    $($row).replaceWith("<tr><th scope='row'>"+id+"</th><td>"+name+"</td><td>"+price+"</td><td>"
+                    +author+"</td><td><a href='' class='me-2 edit_bt'>Edit</a><a class='delete_bt' href=''>Delete</a></td></tr>")
+                }
+            }
+            */
+        })
+        .catch((err)=>console.log("Response of PUT request:",err.message));
     });
     // */
 
     // Attach click event listener to all edit buttons
     // $('#book_table').on('click', 'a:contains("Edit")', function(e) {
     // $('tr td a:nth-child(1)').on('click', function(e) {
-    $('.edit_bt').on('click', function(e) {
+    $('#table_body').on('click','.edit_bt', function(e) {
         console.log("edit button clicked")
         e.preventDefault();
         const $row = $(this).closest('tr');
@@ -132,7 +191,7 @@ $(document).ready(function ready() {
     });
 
     // Attach click event listener to all delete buttons
-    $('.delete_bt').on('click', function(e) {
+    $('#table_body').on('click','.delete_bt', function(e) {
         console.log("delete button clicked");
         e.preventDefault();
         const $row = $(this).closest('tr');
@@ -231,4 +290,4 @@ $(document).ready(function ready() {
 
     })
 
-});
+})

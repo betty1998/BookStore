@@ -6,18 +6,18 @@ var express = require('express'),
 	Book,
 	bodyParser = require('body-parser');
 
-// var dotEnv = require('dotenv'),
-// 	cors = require('cors'),
-// 	jwt = require('jsonwebtoken'),
-// 	bcrypt = require('bcrypt');
+var dotEnv = require('dotenv'),
+	cors = require('cors'),
+	jwt = require('jsonwebtoken'),
+	bcrypt = require('bcrypt');
 
 // initialization to allow nodejs get access to env file
 // process.env will be available to use
-// dotEnv.config();
+dotEnv.config();
 
 // use/apply a middleware
 // add Access-Control-Allow-Origin in response header
-// app.use(cors());
+app.use(cors());
 app.use(bodyParser.json()); // very important to parse json data
 app.listen(8080,() => console.log("connect to port 8080 successfully"));
 
@@ -46,7 +46,7 @@ app.get('/books', function getBooks(req, res, next) {
 			res.send(doc);
 		})
 		.catch((err)=>{
-			res.send({success: false, message: err});
+			res.send({success: false, message: err.message});
 		});
 })
 
@@ -59,7 +59,7 @@ app.get('/books/:id', function getById(req, res, next) {
 		res.send(doc);
 	})
 	.catch((err)=>{
-		res.send({success: false, message: err});
+		res.send({success: false, message: err.message});
 	});
 })
 
@@ -73,7 +73,7 @@ app.post('/books',function postBook(req, res, next) {
 		console.log("posting book:", book.name);
 		book.save()
 		.catch((err)=>{
-			res.send({success: false, message: err});
+			res.send({success: false, message: err.message});
 			});
 		});
 		res.send(req.body);
@@ -85,7 +85,7 @@ app.post('/books',function postBook(req, res, next) {
 			res.send(doc);
 		})
 		.catch((err)=>{
-			res.send({success: false, message: err});
+			res.send({success: false, message: err.message});
 		});
 	}
 
@@ -115,7 +115,7 @@ app.delete('/books/:id', function deleteById(req, res, next) {
 		res.send(doc);
 	})
 	.catch((err)=>{
-		res.send({success: false, message: err});
+		res.send({success: false, message: err.message});
 	});
 })
 
