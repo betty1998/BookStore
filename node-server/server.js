@@ -56,7 +56,11 @@ app.get('/books/:id', function getById(req, res, next) {
 	console.log("getting book by id:", id);
 	Book.find({id:id})
 	.then((doc)=>{
-		res.send(doc);
+		if (doc.length == 0){
+			res.send({success: false, message: "Can't find book with id: " + id});
+		}else{
+			res.send(doc);
+		}
 	})
 	.catch((err)=>{
 		res.send({success: false, message: err.message});
@@ -96,13 +100,14 @@ app.post('/books',function postBook(req, res, next) {
 app.put('/books/:id', function updateById(req, res, next) {
 	var id = req.params.id;
 	console.log("updating book by id:", id);
-	Book.updateOne({id:id},req.body)
+	Book.findOneAndUpdate({id:id},req.body,{new:true})
+	// Book.updateOne({id:id},req.body)
 	.then((doc)=>{
-		// res.send(doc);
-		res.send(req.body);
+			// res.send(doc);
+			res.send(req.body);
 	})
 	.catch((err)=>{
-		res.send({success: false, message: err});
+		res.send({success: false, message: err.message});
 	});
 })
 
@@ -112,7 +117,11 @@ app.delete('/books/:id', function deleteById(req, res, next) {
 	console.log("deleting book by id:", id);
 	Book.deleteOne({id:id})
 	.then((doc)=>{
-		res.send(doc);
+		if (doc.deletedCount == 0){
+			res.send({success: false, message: "Can't find book with id: " + id});
+		}else{
+			res.send(doc);
+		}
 	})
 	.catch((err)=>{
 		res.send({success: false, message: err.message});

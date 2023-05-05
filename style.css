@@ -52,3 +52,18 @@ table{
     width: 100%;
     white-space: nowrap;
 }
+
+select, #filter_input, #filter_btn{
+    width: 100%;
+    height: 100%;
+
+}
+
+#filter_container{
+    min-width: 380px;
+    max-width: 500px;
+}
+
+#filter_container .row{
+    height: 35px;
+}

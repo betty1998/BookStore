@@ -21,15 +21,15 @@
             <table class="table table-bordered border-dark table-striped me-4" id = "book_table">
                 <thead>
                 <tr>
-                    <th scope="col"><a href="" class="sort-by">ID</a><i class = "fa fa-sort"></i></th>
-                    <th scope="col"><a href="" class="sort-by">Name</a><i class = "fa fa-sort"></i></th>
-                    <th scope="col"><a href="" class="sort-by">Price</a><i class = "fa fa-sort"></i></th>
+                    <th scope="col"><a href="" class="sort-by">ID<i class = "fa fa-sort ms-3"></i></a></th>
+                    <th scope="col"><a href="" class="sort-by">Name<i class = "fa fa-sort ms-3"></i></a></th>
+                    <th scope="col"><a href="" class="sort-by">Price<i class = "fa fa-sort ms-3"></i></a></th>
                     <th scope="col">Author</th>
                     <th scope="col">Operation</th>
                 </tr>
                 </thead>
                 <tbody id="table_body">
-                <tr>
+                <!-- <tr>
                     <th scope="row">1</th>
                     <td>JavaScript</td>
                     <td>100</td>
@@ -56,24 +56,31 @@
                     <td>50</td>
                     <td>Kate</td>
                     <td><a href="" class="me-2 edit_bt">Edit</a><a class='delete_bt' href="">Delete</a></td>
-                </tr>
+                </tr> -->
                 </tbody>
                 
             </table>
             <!----------------------------- Filter  ----------------------------->
             <div class="container ms-4" id = "filter_container">
-                <div class="row mb-3 ms-0 ps-0">
-                    <div class="fs-4 ms-0 ps-0 me-4" style="width: 120px">Filter</div>
-                    <select style="width: 120px" id="filter_select">
-                        <option value="Name">Name</option>
-                        <option value="Author">Author</option>
-                        <option value="Min Price">Min Price</option>
-                        <option value="Max Price">Max Price</option>
-                    </select>
+                <div class="row justify-content-start ms-0 p-0">
+                    <div class="col-4 fs-3 ms-0 ps-0 me-4">Filter</div>
+                    <div class="col-4 bg-danger p-0">
+                        <select id="filter_select">
+                            <option value="Name">Name</option>
+                            <option value="Author">Author</option>
+                            <option value="Min Price">Min Price</option>
+                            <option value="Max Price">Max Price</option>
+                        </select>
+                    </div>                   
                 </div>
-                <div class="row ms-0 ps-0">
-                    <input type="text" class="me-4" style="width: 150px" id="filter_input" placeholder="Enter Name">
-                    <button type="submit" style="width: 80px" id="filter_btn">Filter</button>
+                <br>
+                <div class="row justify-content-start ms-0">
+                    <div class="col-5 ps-0">
+                        <input type="text" class="me-4" style="width: 150px" id="filter_input" placeholder="Enter Name">
+                    </div>
+                    <div class="col-3">
+                        <button type="submit" class="ms-2" id="filter_btn">Filter</button>
+                    </div>               
                 </div>
             </div>
         </div>  
@@ -85,7 +92,7 @@
                 <form action="" id="add_form">
                     <div class="item">
                         <label for="add_id">ID</label>
-                        <input type="text" id="add_id" value=5 required>
+                        <input type="number" id="add_id" value=5 required>
                     </div>
                     <div class="item">
                         <label for="add_name">Name</label>
@@ -93,7 +100,7 @@
                     </div>
                     <div class="item">
                         <label for="add_price">Price</label>
-                        <input type="text" id="add_price" value=25 required>
+                        <input type="number" id="add_price" value=25 required>
                     </div>
                     <div class="item">
                         <label for="add_author">Author</label>
