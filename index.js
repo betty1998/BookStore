@@ -119,20 +119,9 @@ $(document).ready(function ready() {
         console.log(id,name,price,author);
         var book = {id: id, name: name, price: price, author: author};
         
-        /* 
-        // Solution 2
-        var $rows = $("#book_table").find("tbody tr");
-        for (let i = 0; i < $rows.length; i++) {
-            const $row = $rows[i];
-            const $id = $($row).find('th').text();
-            if ($id == id) {
-                $($row).replaceWith("<tr><th scope='row'>"+id+"</th><td>"+name+"</td><td>"+price+"</td><td>"
-                +author+"</td><td><a href='' class='me-2 edit_bt'>Edit</a><a class='delete_bt' href=''>Delete</a></td></tr>")
-            }
-        }
-        */
+
         $.ajax({
-            url: api + '/books/:' + id,
+            url: api + '/books/' + id,
             method: 'PUT',
             data: JSON.stringify(book),
             contentType: 'application/json'
@@ -140,9 +129,10 @@ $(document).ready(function ready() {
         .then((res)=>{
             console.log("Response of PUT request:", res);
             // find the corresponding row and edit book in table
-            // Solution 1
-            // /* 
+            
             $('#book_table tbody tr').each(function() {
+                // Solution 1
+                // /* 
                 const $row = $(this);
                 const rowId = $row.find('th').eq(0).text();
                 if (rowId == id) {
@@ -152,20 +142,21 @@ $(document).ready(function ready() {
                     console.log('Row updated:', $row);
                     return false; // Stop looping once you find the target row
                 }
-            });
-            // */
-            /* 
-            // Solution 2
-            var $rows = $("#book_table").find("tbody tr");
-            for (let i = 0; i < $rows.length; i++) {
-                const $row = $rows[i];
-                const $id = $($row).find('th').text();
-                if ($id == id) {
-                    $($row).replaceWith("<tr><th scope='row'>"+id+"</th><td>"+name+"</td><td>"+price+"</td><td>"
-                    +author+"</td><td><a href='' class='me-2 edit_bt'>Edit</a><a class='delete_bt' href=''>Delete</a></td></tr>")
+                // */
+                /* 
+                // Solution 2
+                var $rows = $("#book_table").find("tbody tr");
+                for (let i = 0; i < $rows.length; i++) {
+                    const $row = $rows[i];
+                    const $id = $($row).find('th').text();
+                    if ($id == id) {
+                        $($row).replaceWith("<tr><th scope='row'>"+id+"</th><td>"+name+"</td><td>"+price+"</td><td>"
+                        +author+"</td><td><a href='' class='me-2 edit_bt'>Edit</a><a class='delete_bt' href=''>Delete</a></td></tr>")
+                    }
                 }
-            }
-            */
+                */
+            });
+            
         })
         .catch((err)=>console.log("Response of PUT request:",err.message));
     });
@@ -194,8 +185,20 @@ $(document).ready(function ready() {
     $('#table_body').on('click','.delete_bt', function(e) {
         console.log("delete button clicked");
         e.preventDefault();
-        const $row = $(this).closest('tr');
-        $row.remove();
+        const $row = $(this).closest('tr');      
+        const id = $row.find('th').eq(0).text();
+        console.log(id);
+        $.ajax({
+            url: api + '/books/' + id,
+            method: 'DELETE',
+            contenType: 'application/json'
+        })
+        .then((res)=>{
+            console.log("Response of DELETE request:", res);
+            $row.remove();
+        })
+        .catch((err)=>console.log("Response of DELETE request:",err.message));
+
     });
 
     // handle filter select using jquery
@@ -290,4 +293,4 @@ $(document).ready(function ready() {
 
     })
 
-})
+});
