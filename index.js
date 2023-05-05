@@ -1,6 +1,9 @@
 $(document).ready(function ready() {
+    
+
+
     // handle add book submit using javascript
-    // /*
+    /*
     const form = document.getElementById("add_form");
     form.addEventListener('submit',addSubmit);
     function addSubmit(e){
@@ -20,16 +23,25 @@ $(document).ready(function ready() {
                 throw new Error("The book with id "+id+" already exists!");
             }
         });
-        // add new row to table
-        $("#table_body").append(
-            "<tr><th scope='row'>"+id+"</th><td>"+name+"</td><td>"+price+"</td><td>"
-                +author+"</td><td><a href='' class='me-2'>Edit</a><a href=''>Delete</a></td></tr>"
-        );
+        // add new row to table using innerHTML and ${}
+        const table_body = document.getElementById("table_body");
+        table_body.innerHTML +=
+            `<tr>
+                <th scope='row'>${id}</th>
+                <td>${name}</td>
+                <td>${price}</td>
+                <td>${author}</td>
+                <td><a href='' class='me-2 edit_bt'>Edit</a><a href='' class="delete_bt">Delete</a></td>
+            </tr>`;
+        // $("#table_body").append(
+        //     "<tr><th scope='row'>"+id+"</th><td>"+name+"</td><td>"+price+"</td><td>"
+        //         +author+"</td><td><a href='' class='me-2'>Edit</a><a href=''>Delete</a></td></tr>"
+        // );
     }
-    // */
+    */
     
     // handle add book submit using jquery
-    /*
+    // /*
     $("#add_form").on("submit",function(e){
         e.preventDefault();
         console.log("submit added book");
@@ -46,13 +58,18 @@ $(document).ready(function ready() {
                 alert("The book with id "+id+" already exists!");
                 throw new Error("The book with id "+id+" already exists!");
             }});
-        // add new row to table
+        // add new row to table using $()
         $("#table_body").append(
-            "<tr><th scope='row'>"+id+"</th><td>"+name+"</td><td>"+price+"</td><td>"
-            +author+"</td><td><a href='' class='me-2'>Edit</a><a href=''>Delete</a></td></tr>"
-        );     
+            `<tr>
+                <th scope='row'>${id}</th>
+                <td>${name}</td>
+                <td>${price}</td>
+                <td>${author}</td>
+                <td><a href='' class='me-2 edit_bt'>Edit</a><a href='' class="delete_bt">Delete</a></td>
+            </tr>`);
+          
     });
-    */
+    // */
 
     // handle edit book submit using jquery
     // /*
