@@ -7,7 +7,8 @@ xhr.onload = function onload() {
         console.log("Load data from server:",xhr.response);
         var books = xhr.response;
         var tbody = document.getElementById('table_body');
-        Array.isArray(books) &&
+        Array.isArray(books) &&(
+        books.sort((a,b) => a.id - b.id) && // sort by id
         books.forEach(function(b){
             var tr = document.createElement('tr');
             tr.innerHTML = `
@@ -20,7 +21,7 @@ xhr.onload = function onload() {
                 <a href='' class="delete_bt">Delete</a>
             </td>`;
             tbody.appendChild(tr);
-        });
+        }));
     }
 };
 xhr.send();
