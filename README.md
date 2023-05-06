@@ -1,11 +1,13 @@
 # BookStore
 ## Tech stack:
-- NodeJs
-- Express
-- AJAX
-- MongoDB
-- Mongoose
+- JavaScript
 - jQuery
 - Bootstrap
+- AJAX
+- NodeJs
+- Express
+- MongoDB
+- Mongoose
+
 
 
