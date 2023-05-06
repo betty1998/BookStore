@@ -236,6 +236,7 @@ $(document).ready(function ready() {
         filterTable();
     });
 
+    
     // filter table function
     function filterTable() {
         const filter_name = $('#filter_select').val(); // filter name
@@ -266,32 +267,55 @@ $(document).ready(function ready() {
         });
     }
 
-    // handle sort of id and price
-    $('a.sort-by').on('click', function(e) {  
-        console.log("sort button clicked");
+    var sortAcending = false;
+    // handle sort button
+    $('a.sort-by').on('click', function(e) { 
         e.preventDefault();
-        const sort_by = $(this).text();
-        console.log(sort_by);
-        // sort table
-        $('#book_table tbody tr').sort(function(a, b) {
-            if (sort_by == "ID") {
-                var idA = $(a).find('th').eq(0).text();
-                var idB = $(b).find('th').eq(0).text();
-                return idA - idB;
-            }
-            else if (sort_by == "Price") {
-                var priceA = $(a).find('td').eq(1).text();
-                var priceB = $(b).find('td').eq(1).text();
-                return priceA - priceB;
-            }
-            else if (sort_by == "Name"){
-                var authorA = $(a).find('td').eq(0).text();
-                var authorB = $(b).find('td').eq(0).text();
-                return authorA.localeCompare(authorB);
-            }
+        const sort_by = $(this).text(); // header for sorting: ID, Name, Price
+        console.log("sortAcending:", sortAcending);
+        if (!sortAcending) {
+            console.log("sort button clicked, sort acending by", sort_by);   
+            // sort table
+            $('#book_table tbody tr').sort(function(a, b) {
+                if (sort_by == "ID") {
+                    var idA = $(a).find('th').eq(0).text();
+                    var idB = $(b).find('th').eq(0).text();
+                    return idA - idB;
+                }
+                else if (sort_by == "Price") {
+                    var priceA = $(a).find('td').eq(1).text();
+                    var priceB = $(b).find('td').eq(1).text();
+                    return priceA - priceB;
+                }
+                else if (sort_by == "Name"){
+                    var authorA = $(a).find('td').eq(0).text();
+                    var authorB = $(b).find('td').eq(0).text();
+                    return authorA.localeCompare(authorB);
+                }
+            }).appendTo('#book_table tbody'); // remove and append to the end of table
+            sortAcending = true;
         }
-        ).appendTo('#book_table tbody');
-
-    })
-
+        else {
+            console.log("sort button clicked, sort descending by", sort_by);   
+            // sort table
+            $('#book_table tbody tr').sort(function(a, b) {
+                if (sort_by == "ID") {
+                    var idA = $(a).find('th').eq(0).text();
+                    var idB = $(b).find('th').eq(0).text();
+                    return idB - idA;
+                }
+                else if (sort_by == "Price") {
+                    var priceA = $(a).find('td').eq(1).text();
+                    var priceB = $(b).find('td').eq(1).text();
+                    return priceB - priceA;
+                }
+                else if (sort_by == "Name"){
+                    var authorA = $(a).find('td').eq(0).text();
+                    var authorB = $(b).find('td').eq(0).text();
+                    return authorB.localeCompare(authorA);
+                }
+            }).appendTo('#book_table tbody');
+            sortAcending = false;
+        }
+        });
 });
